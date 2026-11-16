@@ -1,35 +1,52 @@
-const CHOICE = ["Rock", "Paper", "Scissors"];
-const BEATS = {Rock: "Scissors", Paper: "Rock", Scissors: "Paper"}
+const ROUNDS = 5;
 
-function getComputerChoice() {
+function getComputerChoice () {
+    const CHOICE = ["rock", "paper", "scissors"]
     return CHOICE[Math.floor(Math.random() * CHOICE.length)];
 }
 
-function getHumanChoice() {
-    let choice;
-    while (choice === undefined) {
-        choice = CHOICE[Number(prompt("0: Rock, 1: Paper, 2: Scissors"))];
-    }
-    return choice;
+function getHumanChoice () {
+    let humanChoice;
+
+    return humanChoice = prompt("Rock, Paper, Scissors: ", "Your move...").toLowerCase();
+    
 }
 
-function displayWinner(player, computer) {
-    if (player === computer) {
-        console.log("Tie");
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+
+    function playRound (humanChoice, computerChoice) {
+    const BEATS = {rock: "scissors", paper: "rock", scissors: "paper"};
+
+    console.log("Player: " + humanChoice)
+    console.log("Computer: " + computerChoice)
+
+    if (humanChoice === computerChoice){
+        console.log("Tie")
+    }else if (BEATS[humanChoice] === computerChoice){
+        humanScore++;
+        console.log("You win! " + humanChoice + " beats " + computerChoice + ".")
+    }else{
+        computerScore++;
+        console.log("You lose! " + computerChoice + " beats " + humanChoice + ".")
     }
-    else if (BEATS[player] === computer) {
-        console.log("Player wins");
+
+    console.log("SCORES: Player: " + humanScore + "| Computer: " + computerScore)
     }
-    else {
-        console.log("Computer wins");
+
+    for (let i = 0; i != ROUNDS; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
     }
+
+    if(humanScore > computerScore) {
+        console.log("You won the game!")
+    }else if(computerScore > humanScore) {
+        console.log("You lose the game!")
+    }else {
+        console.log("The game is tie!")
+    }
+
 }
 
-const player = getHumanChoice();
-const computer = getComputerChoice();
-
-
-console.log("Player: " + player)
-console.log("Computer: " + computer);
-
-displayWinner(player, computer);
+playGame();
